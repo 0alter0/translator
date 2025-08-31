@@ -10,4 +10,12 @@ The more languages you use, the more time it takes for a translation, and it als
 
 If you'd like to check what it has been translated into, open Inspect, and go into network.
 
+# Todo
+
+- [ ] Add seeds 
+- [ ] Add legacy and new versions (currently on legacy) 
+- [ ] Make new version not translate from one language to english, to another language, to english, etc... 
+- [ ] Make bookmarklet version  
+
+
 # https://0alter0.github.io/translator
