@@ -37,6 +37,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s;
+            margin: 5px;
         }
         button:hover {
             background: #45a049;
@@ -78,7 +79,8 @@
 <body>
     <h1>Translator</h1>
     <textarea id="inputText" placeholder="Enter text here" rows="5"></textarea><br>
-    <button onclick="translate100Times()">Translate 100x</button>
+    <button onclick="translate100Times(false)">Translate 100x (Full)</button>
+    <button onclick="translate100Times(true)">Translate 100x (Speed Mode)</button>
 
     <div class="progress-container">
         <div class="progress-bar" id="progressBar">0%</div>
@@ -88,11 +90,10 @@
     <pre id="outputText"></pre>
 
     <script>
-        const languages = [
-            "af","sq","am","ar","hy","az","eu","be","bn","bs","bg","ca","ceb","ny","zh-CN","zh-TW","co","hr","cs","da","nl","en","eo","et","tl","fi","fr","fy","gl","ka","de","el","gu","ht","ha","haw","iw","hi","hmn","hu","is","ig","id","ga","it","ja","jw","kn","kk","km","rw","ko","ku","ky","lo","la","lv","lt","lb","mk","mg","ms","ml","mt","mi","mr","mn","my","ne","no","or","ps","fa","pl","pt","pa","ro","ru","sm","gd","sr","st","sn","sd","si","sk","sl","so","es","su","sw","sv","tg","ta","tt","te","th","tr","tk","uk","ur","ug","uz","vi","cy","xh","yi","yo","zu"
-        ];
+        const fullLanguages = ["af","sq","am","ar","hy","az","eu","be","bn","bs","bg","ca","ceb","ny","zh-CN","zh-TW","co","hr","cs","da","nl","en","eo","et","tl","fi","fr","fy","gl","ka","de","el","gu","ht","ha","haw","iw","hi","hmn","hu","is","ig","id","ga","it","ja","jw","kn","kk","km","rw","ko","ku","ky","lo","la","lv","lt","lb","mk","mg","ms","ml","mt","mi","mr","mn","my","ne","no","or","ps","fa","pl","pt","pa","ro","ru","sm","gd","sr","st","sn","sd","si","sk","sl","so","es","su","sw","sv","tg","ta","tt","te","th","tr","tk","uk","ur","ug","uz","vi","cy","xh","yi","yo","zu"];
+        const speedLanguages = ["es","fr","de","it","pt","ja","ko","zh-CN","ru","ar","hi","id","tr","nl","sv"];
 
-        async function translate100Times() {
+        async function translate100Times(speedMode) {
             const inputText = document.getElementById("inputText").value;
             const outputText = document.getElementById("outputText");
             const progressBar = document.getElementById("progressBar");
@@ -103,6 +104,7 @@
             }
 
             let text = inputText;
+            const languages = speedMode ? speedLanguages : fullLanguages;
 
             try {
                 for (let i = 0; i < 100; i++) {
