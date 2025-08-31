@@ -8,4 +8,6 @@ The difference between Full and Speed Mode is obviously one is faster than the o
 
 The more languages you use, the more time it takes for a translation, and it also becomes slower depending on how long your text is.
 
+If you'd like to check what it has been translated into, open Inspect, and go into network.
+
 # https://0alter0.github.io/translator
