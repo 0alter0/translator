@@ -1,0 +1,2 @@
+# translator
+My custom translator
