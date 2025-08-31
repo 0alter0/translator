@@ -12,9 +12,9 @@ If you'd like to check what it has been translated into, open Inspect, and go in
 
 # Todo
 
-- [ ] Add seeds 
-- [ ] Add legacy and new versions (currently on legacy) 
-- [ ] Make new version not translate from one language to english, to another language, to english, etc... 
+- [x] Add seeds 
+- [x] Add legacy and new versions (currently on legacy) 
+- [x] Make new version not translate from one language to english, to another language, to english, etc... 
 - [ ] Make bookmarklet version  
 
 
