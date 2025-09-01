@@ -3,7 +3,7 @@ This is my custom translator that uses Google Translate to translate stuff 100 t
 
 The main reason why I made this is because (like said in Info) most of these tools are weird .exes or python scripts that barely work. I've been researching Google Translate stuff for quite some time and I've made things like this, but they were slow, and most tools are.
 
-This tool is actually decently fast, the old tool I used to use was HyperTranslate, which **was** very fast, 100 translations in 16 seconds, before it came extremely slow and took 3+ minutes for 100 translations. I hope you enjoy this tool, as I find it quite fun to mess around with.
+This tool is actually decently fast, the old tool I used to use was HyperTranslate, which **was** very fast, 100 translations in 16 seconds, before it became extremely slow and took 3+ minutes for 100 translations. I hope you enjoy this tool, as I find it quite fun to mess around with.
 
 # Info
 This isn't made with python or some sketchy .exe, it's not hard to use and very straight forward.
