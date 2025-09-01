@@ -34,6 +34,6 @@ Highlight is a version that will take whatever text you have highlighted, transl
 - [x] Add seeds 
 - [x] Add legacy and new versions (currently on legacy) 
 - [x] Make new version not translate from one language to english, to another language, to english, etc... 
-- [ ] Make bookmarklet version
+- [x] Make bookmarklet version
 
 # https://0alter0.github.io/translator
