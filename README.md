@@ -10,6 +10,10 @@ The more languages you use, the more time it takes for a translation, and it als
 
 If you'd like to check what it has been translated into, open Inspect, and go into network.
 
+Difference between legacy and new? The difference is one (legacy) makes some decent amount of sense, while the other (new) is basically schizophrenic. The results are so bad, 9/10 you're gonna get something like "And then the jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjJJJJJJJJJJJJJJ."
+
+Yes, this is kinda funny, although I personally use Legacy Speed, as it's fast, makes sense, but still weird.
+
 # Todo
 
 - [x] Add seeds 
