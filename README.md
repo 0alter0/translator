@@ -18,6 +18,17 @@ Difference between legacy and new? The difference is one (legacy) makes some dec
 
 Yes, this is kinda funny, although I personally use Legacy Speed, as it's fast, makes sense, but still weird.
 
+# Bookmarklets
+Before I even explain what these do, you need to know how to even install these, it's very simple, just make a bookmark and instead of a URL, put that script in.
+
+Now, what do they do? There are currently 3 versions, lite, heavy, and highlight. All of these versions use **Legacy Speed**.
+
+Lite is a version that doesn't send many requests very fast, it goes through every text element (top to bottom) and translates them 100 times one by one.
+
+Heavy is a version that sends many requests, it takes the first 50 text elements and runs them through Google Translate 100 times. This is extremely fast but will slow your browser down a lot. I recommend just letting it sit while you do something else not on your browser.
+
+Highlight is a version that will take whatever text you have highlighted, translate it 100 times, then replaces the text with the output of all the translations. I personally like this one the most as get gives you a lot of control and it doesn't slow anything down.
+
 # Todo
 
 - [x] Add seeds 
