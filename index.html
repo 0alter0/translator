@@ -24,14 +24,11 @@
         input:checked + .slider {background-color: #2196F3;}
         input:checked + .slider:before {transform: translateX(26px);}
         .word-count-input {width: 60px;}
-        #fileInput {margin: 10px 0;}
     </style>
 </head>
 <body>
     <h1>Translator</h1>
-    
-    <input type="file" id="fileInput" accept=".txt" title="Upload words.txt file">
-    
+
     <div class="toggle-container">
         <span>Use Random Words:</span>
         <label class="toggle">
@@ -59,24 +56,24 @@
     <pre id="outputText"></pre>
     <button id="copyButton" onclick="copyOutput()">Copy Output</button>
 
-    <script> // THIS IS JUST A BETA!!! IT WILL AUTO PULL FROM A LIST YOU WON'T NEED IN THE FUTURE
+    <script>
         const fullLanguages = ["af","sq","am","ar","hy","az","eu","be","bn","bs","bg","ca","ceb","ny","zh-CN","zh-TW","co","hr","cs","da","nl","en","eo","et","tl","fi","fr","fy","gl","ka","de","el","gu","ht","ha","haw","iw","hi","hmn","hu","is","ig","id","ga","it","ja","jw","kn","kk","km","rw","ko","ku","ky","lo","la","lv","lt","lb","mk","mg","ms","ml","mt","mi","mr","mn","my","ne","no","or","ps","fa","pl","pt","pa","ro","ru","sm","gd","sr","st","sn","sd","si","sk","sl","so","es","su","sw","sv","tg","ta","tt","te","th","tr","tk","uk","ur","ug","uz","vi","cy","xh","yi","yo","zu"];
         const speedLanguages = ["es","fr","de","it","pt","ja","ko","zh-CN","ru","ar","hi","id","tr","nl","sv"];
-        
+
         let wordsArray = [];
 
-        document.getElementById('fileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file && file.type === 'text/plain') {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const text = e.target.result;
-                    wordsArray = text.split(/\s+/).filter(word => word.trim() !== '');
-                    console.log(`Loaded ${wordsArray.length} words from file`);
-                };
-                reader.readAsText(file);
-            }
-        });
+        fetch("words.txt")
+            .then(response => {
+                if (!response.ok) throw new Error("Could not load words.txt");
+                return response.text();
+            })
+            .then(text => {
+                wordsArray = text.split(/\s+/).filter(word => word.trim() !== "");
+                console.log(`Loaded ${wordsArray.length} words from words.txt`);
+            })
+            .catch(err => {
+                console.error(err.message);
+            });
 
         function mulberry32(seed) {
             return function() {
@@ -94,19 +91,14 @@
         }
 
         function getRandomWords(count, seed) {
-            if (wordsArray.length === 0) {
-                return "Please upload a words.txt file first!";
-            }
-            
+            if (wordsArray.length === 0) return "Could not load words.txt";
             const selectedWords = [];
             const rng = seed === 0 ? Math.random : mulberry32(seed);
-            
             for (let i = 0; i < count; i++) {
                 const randomIndex = Math.floor(rng() * wordsArray.length);
                 selectedWords.push(wordsArray[randomIndex]);
             }
-            
-            return selectedWords.join(' ');
+            return selectedWords.join(" ");
         }
 
         async function translate100Times(speedMode, legacy) {
@@ -117,7 +109,6 @@
             const randomWordsToggle = document.getElementById("randomWordsToggle").checked;
             
             let inputText;
-            
             if (randomWordsToggle) {
                 const wordCount = parseInt(document.getElementById("wordCount").value);
                 if (wordCount < 3 || wordCount > 20) {
@@ -125,12 +116,12 @@
                     return;
                 }
                 inputText = getRandomWords(wordCount, seed);
-                inputTextElement.value = inputText;
+                inputTextElement.value = inputText; 
             } else {
                 inputText = inputTextElement.value;
             }
 
-            if (!inputText || inputText.includes("Please upload")) {
+            if (!inputText || inputText.includes("Could not load words")) {
                 outputText.textContent = inputText || "text goes here";
                 return;
             }
