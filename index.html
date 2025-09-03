@@ -101,77 +101,73 @@
             return selectedWords.join(" ");
         }
 
-        async function translate100Times(speedMode, legacy) {
-            const inputTextElement = document.getElementById("inputText");
-            const outputText = document.getElementById("outputText");
-            const progressBar = document.getElementById("progressBar");
-            const seed = parseInt(document.getElementById("seedInput").value);
-            const randomWordsToggle = document.getElementById("randomWordsToggle").checked;
-            
-            let inputText;
-            if (randomWordsToggle) {
-                const wordCount = parseInt(document.getElementById("wordCount").value);
-                if (wordCount < 3 || wordCount > 20) {
-                    outputText.textContent = "Word count must be between 3 and 20!";
-                    return;
-                }
-                inputText = getRandomWords(wordCount, seed);
-                inputTextElement.value = inputText; 
-            } else {
-                inputText = inputTextElement.value;
-            }
+async function translate100Times(speedMode, legacy) {
+    const inputTextElement = document.getElementById("inputText");
+    const outputText = document.getElementById("outputText");
+    const progressBar = document.getElementById("progressBar");
+    const seed = parseInt(document.getElementById("seedInput").value);
+    const randomWordsToggle = document.getElementById("randomWordsToggle").checked;
+    
+    let inputText;
+    if (randomWordsToggle) {
+        const wordCount = Math.floor(Math.random() * 21) + 5;
+        inputText = getRandomWords(wordCount, seed);
+        inputTextElement.value = inputText; 
+    } else {
+        inputText = inputTextElement.value;
+    }
 
-            if (!inputText || inputText.includes("Could not load words")) {
-                outputText.textContent = inputText || "text goes here";
-                return;
-            }
+    if (!inputText || inputText.includes("Could not load words")) {
+        outputText.textContent = inputText || "text goes here";
+        return;
+    }
 
-            let text = inputText;
-            const languages = speedMode ? speedLanguages : fullLanguages;
+    let text = inputText;
+    const languages = speedMode ? speedLanguages : fullLanguages;
 
-            try {
-                if (legacy) {
-                    for (let i = 0; i < 100; i++) {
-                        const idx = getRandomIndex(languages, seed, i);
-                        const lang = languages[idx];
-                        
-                        let res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`);
-                        let data = await res.json();
-                        text = data[0].map(item => item[0]).join("");
-                        
-                        res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${lang}&tl=en&dt=t&q=${encodeURIComponent(text)}`);
-                        data = await res.json();
-                        text = data[0].map(item => item[0]).join("");
-                        
-                        const progress = Math.round(((i+1)/100)*100);
-                        progressBar.style.width = progress + "%";
-                        progressBar.textContent = progress + "%";
-                    }
-                } else {
-                    for (let i = 0; i < 100; i++) {
-                        const idx = getRandomIndex(languages, seed, i);
-                        const lang = languages[idx];
-                        
-                        let res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`);
-                        let data = await res.json();
-                        text = data[0].map(item => item[0]).join("");
-                        
-                        const progress = Math.round(((i+1)/100)*100);
-                        progressBar.style.width = progress + "%";
-                        progressBar.textContent = progress + "%";
-                    }
-                    
-                    let res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(text)}`);
-                    let data = await res.json();
-                    text = data[0].map(item => item[0]).join("");
-                }
+    try {
+        if (legacy) {
+            for (let i = 0; i < 100; i++) {
+                const idx = getRandomIndex(languages, seed, i);
+                const lang = languages[idx];
                 
-                outputText.textContent = text;
-            } catch (e) {
-                outputText.textContent = "Error during translation: " + e.message;
+                let res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`);
+                let data = await res.json();
+                text = data[0].map(item => item[0]).join("");
+                
+                res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${lang}&tl=en&dt=t&q=${encodeURIComponent(text)}`);
+                data = await res.json();
+                text = data[0].map(item => item[0]).join("");
+                
+                const progress = Math.round(((i+1)/100)*100);
+                progressBar.style.width = progress + "%";
+                progressBar.textContent = progress + "%";
             }
+        } else {
+            for (let i = 0; i < 100; i++) {
+                const idx = getRandomIndex(languages, seed, i);
+                const lang = languages[idx];
+                
+                let res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`);
+                let data = await res.json();
+                text = data[0].map(item => item[0]).join("");
+                
+                const progress = Math.round(((i+1)/100)*100);
+                progressBar.style.width = progress + "%";
+                progressBar.textContent = progress + "%";
+            }
+            
+            let res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(text)}`);
+            let data = await res.json();
+            text = data[0].map(item => item[0]).join("");
         }
-
+        
+        outputText.textContent = text;
+    } catch (e) {
+        outputText.textContent = "Error during translation: " + e.message;
+    }
+}
+        
         function copyOutput() {
             const outputText = document.getElementById("outputText").textContent;
             if (!outputText) return;
